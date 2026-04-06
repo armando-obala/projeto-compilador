@@ -11,7 +11,7 @@ ATENÇÃO: Sempre abra o PowerShell como ADMINISTRADOR
      (rode isso toda vez que abrir o PowerShell)
 --------------------------------------------------------
 
-cd C:\Users\jokas\OneDrive\Documentos\GitHub\Compiladores-UNIC\compilador
+cd C:\Users\caminho\compilador
 
 
 --------------------------------------------------------
@@ -55,7 +55,7 @@ del compilador.exe
   RESUMO RÁPIDO — ORDEM CERTA PARA RODAR TUDO
 --------------------------------------------------------
 
-  1. cd C:\Users\jokas\OneDrive\Documentos\GitHub\Compiladores-UNIC\compilador
+  1. cd C:\Users\caminho\compilador
   2. .\compila.bat
   3. .\compilador tests/programa.src
      OU
