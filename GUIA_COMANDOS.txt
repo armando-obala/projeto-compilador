@@ -1,0 +1,108 @@
+========================================================
+  GUIA DE COMANDOS — Compilador Didático (Flex + C++)
+========================================================
+
+ATENÇÃO: Sempre abra o PowerShell como ADMINISTRADOR
+         (botão direito → Executar como administrador)
+
+
+--------------------------------------------------------
+  1. ENTRAR NA PASTA DO PROJETO
+     (rode isso toda vez que abrir o PowerShell)
+--------------------------------------------------------
+
+cd C:\Users\jokas\OneDrive\Documentos\GitHub\Compiladores-UNIC\compilador
+
+
+--------------------------------------------------------
+  2. COMPILAR O PROJETO
+     (rode isso toda vez que mudar algum arquivo)
+--------------------------------------------------------
+
+.\compila.bat
+
+
+--------------------------------------------------------
+  3. TESTAR COM ARQUIVO
+     (lê o programa.src e mostra os tokens)
+--------------------------------------------------------
+
+.\compilador tests/programa.src
+
+
+--------------------------------------------------------
+  4. MODO INTERATIVO
+     (você digita o código e ele mostra os tokens)
+--------------------------------------------------------
+
+.\compilador
+
+  Para sair do modo interativo:
+  Ctrl+Z + Enter (Windows)
+
+
+--------------------------------------------------------
+  5. SE PRECISAR RECOMPILAR DO ZERO
+     (apaga os arquivos gerados e recompila)
+--------------------------------------------------------
+
+del lex.yy.cc
+del compilador.exe
+.\compila.bat
+
+
+--------------------------------------------------------
+  RESUMO RÁPIDO — ORDEM CERTA PARA RODAR TUDO
+--------------------------------------------------------
+
+  1. cd C:\Users\jokas\OneDrive\Documentos\GitHub\Compiladores-UNIC\compilador
+  2. .\compila.bat
+  3. .\compilador tests/programa.src
+     OU
+     .\compilador
+
+
+--------------------------------------------------------
+  CONTEÚDO DO compila.bat (para referência)
+--------------------------------------------------------
+
+  win_flex lexico.l
+  g++ -std=c++17 -Wall -Iinclude -IC:\winflexbison -o compilador lex.yy.cc src/main.cpp
+
+
+--------------------------------------------------------
+  ESTRUTURA DO PROJETO
+--------------------------------------------------------
+
+  compilador/
+  ├── include/
+  │   └── tokens.h       <- tipos de token
+  ├── src/
+  │   └── main.cpp       <- modo arquivo + interativo
+  ├── tests/
+  │   └── programa.src   <- programa de teste
+  ├── lexico.l           <- regras do Flex
+  ├── compila.bat        <- script de compilação
+  └── Makefile           <- alternativa ao compila.bat
+
+
+--------------------------------------------------------
+  COMO ADICIONAR UM NOVO TOKEN (ex: RG)
+--------------------------------------------------------
+
+  Passo 1 — tokens.h:
+    Adicione dentro do enum:
+    LIT_RG,
+
+  Passo 2 — lexico.l:
+    Adicione na area de tokens especiais:
+    {DIGITO}{2}"."{DIGITO}{3}"."{DIGITO}{3}"-"{DIGITO} { return (int)TokenType::LIT_RG; }
+
+  Passo 3 — main.cpp:
+    Adicione no switch de tokenTypeName():
+    case TokenType::LIT_RG: return "LIT_RG";
+
+  Passo 4 — Recompile:
+    .\compila.bat
+
+========================================================
