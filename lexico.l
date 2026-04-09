@@ -20,6 +20,11 @@ HORA_PAD    {DIGITO}{2}":"{DIGITO}{2}(":"{DIGITO}{2})?
 TEL_PAD     "("+{DIGITO}{2}+")"+{DIGITO}{4,5}"-"{DIGITO}{4}
 CEP_PAD     {DIGITO}{5}"-"{DIGITO}{3}
 HEX_PAD     "0"[xX][0-9a-fA-F]+
+RG_PAD      {DIGITO}{2}"."{DIGITO}{3}"."{DIGITO}{3}"-"{DIGITO}
+MOEDA_PAD   "R$"[ \t]?{DIGITO}{1,3}("."{DIGITO}{3})*(","{DIGITO}{2})?
+URL_PAD     (http|https)":"//"[^ \t\r\n]+|"www."[^ \t\r\n]+
+IP_PAD      {DIGITO}{1,3}"."{DIGITO}{1,3}"."{DIGITO}{1,3}"."{DIGITO}{1,3}
+PERCENT_PAD {DIGITO}+"%"
 
 %%
 
@@ -46,6 +51,11 @@ HEX_PAD     "0"[xX][0-9a-fA-F]+
 {TEL_PAD}   { return (int)TokenType::LIT_TEL;    }
 {CEP_PAD}   { return (int)TokenType::LIT_CEP;    }
 {HEX_PAD}   { return (int)TokenType::LIT_HEX;    }
+{RG_PAD}    { return (int)TokenType::LIT_RG;     }
+{MOEDA_PAD} { return (int)TokenType::LIT_MOEDA;  }
+{URL_PAD}   { return (int)TokenType::LIT_URL;    }
+{IP_PAD}    { return (int)TokenType::LIT_IP;     }
+{PERCENT_PAD} { return (int)TokenType::LIT_PERCENT; }
 
  /* LITERAIS NUMERICOS — float antes de int */
 {DIGITO}+"."{DIGITO}+   { return (int)TokenType::LIT_FLOAT;  }

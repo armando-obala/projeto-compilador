@@ -57,6 +57,11 @@ enum class TokenType : int {
     LIT_TEL,      /* Telefone:  (00)00000-0000              */
     LIT_CEP,      /* CEP:       00000-000                   */
     LIT_HEX,      /* Hex:       0xFF                        */
+    LIT_RG,       /* RG:        12.345.678-9                 */
+    LIT_MOEDA,    /* Moeda:     R$1.234,56                   */
+    LIT_URL,      /* URL:       http(s)://... ou www....     */
+    LIT_IP,       /* IP:        192.168.0.1                  */
+    LIT_PERCENT,  /* Percent:   50%                          */
     /* ════════════════════════════════════════════════════
        ★ FIM DA ÁREA DE EXTENSÃO ★
     ════════════════════════════════════════════════════ */

@@ -55,6 +55,11 @@ std::string tokenTypeName(TokenType t) {
         case TokenType::LIT_TEL:        return "LIT_TEL";
         case TokenType::LIT_CEP:        return "LIT_CEP";
         case TokenType::LIT_HEX:        return "LIT_HEX";
+        case TokenType::LIT_RG:         return "LIT_RG";
+        case TokenType::LIT_MOEDA:      return "LIT_MOEDA";
+        case TokenType::LIT_URL:        return "LIT_URL";
+        case TokenType::LIT_IP:         return "LIT_IP";
+        case TokenType::LIT_PERCENT:    return "LIT_PERCENT";
 
         /* identificador */
         case TokenType::IDENTIFICADOR:  return "IDENTIFICADOR";
