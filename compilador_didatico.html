@@ -572,6 +572,11 @@ const TokenType = {
   LIT_TEL:       'LIT_TEL',
   LIT_CEP:       'LIT_CEP',
   LIT_HEX:       'LIT_HEX',
+  LIT_RG:        'LIT_RG',
+  LIT_MOEDA:     'LIT_MOEDA',
+  LIT_URL:       'LIT_URL',
+  LIT_IP:        'LIT_IP',
+  LIT_PERCENT:   'LIT_PERCENT',
   IDENTIFICADOR: 'IDENTIFICADOR',
   OP_MAIS:       'OP_MAIS',
   OP_MENOS:      'OP_MENOS',
@@ -608,6 +613,12 @@ const KEYWORDS = {
 
 // Padrões especiais (ordem importa — mais específico primeiro)
 const SPECIAL_PATTERNS = [
+  { re: /^https?:\/\/[^\s]+/,            type: TokenType.LIT_URL },
+  { re: /^www\.[^\s]+/,                   type: TokenType.LIT_URL },
+  { re: /^\d{2}\.\d{3}\.\d{3}-\d{1,2}/, type: TokenType.LIT_RG },
+  { re: /^R\$[ \t]?\d{1,3}(?:\.\d{3})*(?:,\d{2})?/, type: TokenType.LIT_MOEDA },
+  { re: /^\d{1,3}(?:\.\d{1,3}){3}/,      type: TokenType.LIT_IP },
+  { re: /^\d+%/,                           type: TokenType.LIT_PERCENT },
   { re: /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/, type: TokenType.LIT_CNPJ  },
   { re: /^\d{3}\.\d{3}\.\d{3}-\d{2}/,         type: TokenType.LIT_CPF   },
   { re: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/, type: TokenType.LIT_EMAIL },
@@ -718,9 +729,11 @@ function tokenize(src) {
 /* Categoria visual para colorir */
 function categoria(type) {
   if (type.startsWith('KW_') || type === 'LIT_TRUE' || type === 'LIT_FALSE') return 'keyword';
-  if (type === 'LIT_CPF' || type === 'LIT_CNPJ' || type === 'LIT_EMAIL' ||
+    if (type === 'LIT_CPF' || type === 'LIT_CNPJ' || type === 'LIT_EMAIL' ||
       type === 'LIT_DATA' || type === 'LIT_HORA' || type === 'LIT_TEL' ||
-      type === 'LIT_CEP' || type === 'LIT_HEX') return 'special';
+      type === 'LIT_CEP' || type === 'LIT_HEX' || type === 'LIT_RG' ||
+      type === 'LIT_MOEDA' || type === 'LIT_URL' || type === 'LIT_IP' ||
+      type === 'LIT_PERCENT') return 'special';
   if (type.startsWith('LIT_')) return 'literal';
   if (type === 'IDENTIFICADOR') return 'ident';
   if (type.startsWith('OP_')) return 'op';
@@ -820,6 +833,7 @@ joao@email.com          // Email
 01310-100               // CEP
 0xFF                    // Hexadecimal
 0xDEADBEEF              // Hex grande`,
+
 
   operadores: `// Operadores
 int a = 10;
