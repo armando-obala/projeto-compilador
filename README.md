@@ -47,21 +47,6 @@ Desenvolver um compilador completo capaz de:
 
 ---
 
-## 📅 Cronograma Sugerido
-
-| Fase | Atividades | Semana |
-| :--- | :--- | :--- |
-| 1 | Levantamento de escopo e definição da linguagem | 1 |
-| 2 | Design da gramática e ambiente | 2 |
-| 3 | Implementação do Analisador Léxico | 3–4 |
-| 4 | Implementação do Analisador Sintático | 5–6 |
-| 5 | Desenvolvimento da Análise Semântica | 7–8 |
-| 6 | Geração de Código (Backend) | 9–10 |
-| 7 | Testes Integrados | 11 |
-| 8 | Documentação e Entrega Final | 12 |
-
----
-
 ## 💡 Exemplo de Aplicação (Caso de Uso)
 O compilador deve ser capaz de processar um programa que contenha:
 * Declaração de variáveis.
@@ -76,3 +61,82 @@ O compilador deve ser capaz de processar um programa que contenha:
 
 ---
 > **Nota:** Este documento serve como guia de implementação para garantir que todos os critérios de avaliação sejam atendidos.
+
+---
+
+## Configuração do Ambiente (Windows)
+
+Este projeto usa Flex + C++ e foi validado em Windows com winflexbison e MSYS2 (UCRT64).
+
+### Dependências
+
+1. win_flex disponível no terminal (ex.: via winflexbison).
+2. g++ do MSYS2 instalado (UCRT64).
+
+Verificação rápida:
+
+```powershell
+win_flex --version
+g++ --version
+```
+
+Se `g++` não for encontrado no PowerShell/CMD comum, ele pode estar instalado apenas dentro do shell do MSYS2.
+
+### Caminho recomendado para o g++
+
+Instalação validada neste projeto:
+
+```text
+C:\msys64\ucrt64\bin\g++.exe
+```
+
+Opcional (recomendado): adicionar `C:\msys64\ucrt64\bin` ao PATH do Windows para usar `g++` em qualquer terminal.
+
+### Como compilar
+
+Na pasta do projeto:
+
+```powershell
+.\compila.bat
+```
+
+O script `compila.bat` já tenta:
+
+1. Usar `g++` do PATH.
+2. Se não encontrar, usar `C:\msys64\ucrt64\bin\g++.exe` automaticamente.
+
+### Como executar
+
+Modo arquivo (recomendado para teste inicial):
+
+```powershell
+.\compilador.exe tests\programa.src
+```
+
+Modo interativo:
+
+```powershell
+.\compilador.exe
+```
+
+Saída do modo interativo no Windows: `Ctrl+Z` e depois `Enter`.
+
+### Quando o executável "não abre"
+
+Se o `compilador.exe` fecha sem saída no CMD/PowerShell, normalmente faltam DLLs do runtime do MSYS2 no PATH da sessão.
+
+Teste temporário no PowerShell:
+
+```powershell
+$env:Path = "C:\msys64\ucrt64\bin;$env:Path"
+.\compilador.exe tests\programa.src
+```
+
+Teste temporário no CMD:
+
+```bat
+set PATH=C:\msys64\ucrt64\bin;%PATH%
+.\compilador.exe tests\programa.src
+```
+
+Se funcionar após isso, a correção definitiva é adicionar `C:\msys64\ucrt64\bin` ao PATH do Windows.

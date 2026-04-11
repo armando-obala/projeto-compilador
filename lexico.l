@@ -21,8 +21,8 @@ TEL_PAD     "("+{DIGITO}{2}+")"+{DIGITO}{4,5}"-"{DIGITO}{4}
 CEP_PAD     {DIGITO}{5}"-"{DIGITO}{3}
 HEX_PAD     "0"[xX][0-9a-fA-F]+
 RG_PAD      {DIGITO}{2}"."{DIGITO}{3}"."{DIGITO}{3}"-"{DIGITO}
-MOEDA_PAD   "R$"[ \t]?{DIGITO}{1,3}("."{DIGITO}{3})*(","{DIGITO}{2})?
-URL_PAD     (http|https)":"//"[^ \t\r\n]+|"www."[^ \t\r\n]+
+MOEDA_PAD   "R\$"[ \t]?{DIGITO}{1,3}("."{DIGITO}{3})*(","{DIGITO}{2})?
+URL_PAD     (http|https)"://"[^ \t\r\n]+|"www."[^ \t\r\n]+
 IP_PAD      {DIGITO}{1,3}"."{DIGITO}{1,3}"."{DIGITO}{1,3}"."{DIGITO}{1,3}
 PERCENT_PAD {DIGITO}+"%"
 
