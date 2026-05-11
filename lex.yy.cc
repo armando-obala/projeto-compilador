@@ -652,9 +652,11 @@ static const flex_int32_t yy_rule_can_match_eol[56] =
 #line 2 "lexico.l"
 #include <iostream>
 #include <string>
-#include "tokens.h"
-#line 656 "lex.yy.cc"
-#line 657 "lex.yy.cc"
+#include <cstring>
+#include "ast.h"
+#include "sintatico.tab.h"
+#line 658 "lex.yy.cc"
+#line 659 "lex.yy.cc"
 
 #define INITIAL 0
 
@@ -786,12 +788,12 @@ YY_DECL
 		}
 
 	{
-#line 29 "lexico.l"
+#line 31 "lexico.l"
 
 
-#line 32 "lexico.l"
+#line 34 "lexico.l"
  /* PALAVRAS-CHAVE — devem vir antes de IDENTIFICADOR */
-#line 794 "lex.yy.cc"
+#line 796 "lex.yy.cc"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -860,298 +862,298 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 33 "lexico.l"
-{ return (int)TokenType::KW_INT;    }
+#line 35 "lexico.l"
+{ return KW_INT;    }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 34 "lexico.l"
-{ return (int)TokenType::KW_FLOAT;  }
+#line 36 "lexico.l"
+{ return KW_FLOAT;  }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 35 "lexico.l"
-{ return (int)TokenType::KW_BOOL;   }
+#line 37 "lexico.l"
+{ return KW_BOOL;   }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 36 "lexico.l"
-{ return (int)TokenType::KW_STRING; }
+#line 38 "lexico.l"
+{ return KW_STRING; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 37 "lexico.l"
-{ return (int)TokenType::KW_IF;     }
+#line 39 "lexico.l"
+{ return KW_IF;     }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 38 "lexico.l"
-{ return (int)TokenType::KW_ELSE;   }
+#line 40 "lexico.l"
+{ return KW_ELSE;   }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 39 "lexico.l"
-{ return (int)TokenType::KW_WHILE;  }
+#line 41 "lexico.l"
+{ return KW_WHILE;  }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 40 "lexico.l"
-{ return (int)TokenType::KW_ENDDO;  }
+#line 42 "lexico.l"
+{ return KW_ENDDO;  }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 41 "lexico.l"
-{ return (int)TokenType::KW_PRINT;  }
+#line 43 "lexico.l"
+{ return KW_PRINT;  }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 42 "lexico.l"
-{ return (int)TokenType::KW_RETURN; }
+#line 44 "lexico.l"
+{ return KW_RETURN; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 43 "lexico.l"
-{ return (int)TokenType::LIT_TRUE;  }
+#line 45 "lexico.l"
+{ return LIT_TRUE;  }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 44 "lexico.l"
-{ return (int)TokenType::LIT_FALSE; }
+#line 46 "lexico.l"
+{ return LIT_FALSE; }
 	YY_BREAK
 /* TOKENS ESPECIAIS — adicione novos padroes aqui */
 case 13:
 YY_RULE_SETUP
-#line 47 "lexico.l"
-{ return (int)TokenType::LIT_CPF;   }
+#line 49 "lexico.l"
+{ return LIT_CPF;   }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 48 "lexico.l"
-{ return (int)TokenType::LIT_CNPJ;  }
+#line 50 "lexico.l"
+{ return LIT_CNPJ;  }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 49 "lexico.l"
-{ return (int)TokenType::LIT_EMAIL;  }
+#line 51 "lexico.l"
+{ return LIT_EMAIL;  }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 50 "lexico.l"
-{ return (int)TokenType::LIT_DATA;   }
+#line 52 "lexico.l"
+{ return LIT_DATA;   }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 51 "lexico.l"
-{ return (int)TokenType::LIT_HORA;   }
+#line 53 "lexico.l"
+{ return LIT_HORA;   }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 52 "lexico.l"
-{ return (int)TokenType::LIT_TEL;    }
+#line 54 "lexico.l"
+{ return LIT_TEL;    }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 53 "lexico.l"
-{ return (int)TokenType::LIT_CEP;    }
+#line 55 "lexico.l"
+{ return LIT_CEP;    }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 54 "lexico.l"
-{ return (int)TokenType::LIT_HEX;    }
+#line 56 "lexico.l"
+{ return LIT_HEX;    }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 55 "lexico.l"
-{ return (int)TokenType::LIT_RG;     }
+#line 57 "lexico.l"
+{ return LIT_RG;     }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 56 "lexico.l"
-{ return (int)TokenType::LIT_MOEDA;  }
+#line 58 "lexico.l"
+{ return LIT_MOEDA;  }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 57 "lexico.l"
-{ return (int)TokenType::LIT_URL;    }
+#line 59 "lexico.l"
+{ return LIT_URL;    }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 58 "lexico.l"
-{ return (int)TokenType::LIT_IP;     }
+#line 60 "lexico.l"
+{ return LIT_IP;     }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 59 "lexico.l"
-{ return (int)TokenType::LIT_PERCENT; }
+#line 61 "lexico.l"
+{ return LIT_PERCENT; }
 	YY_BREAK
 /* LITERAIS NUMERICOS — float antes de int */
 case 26:
 YY_RULE_SETUP
-#line 62 "lexico.l"
-{ return (int)TokenType::LIT_FLOAT;  }
+#line 64 "lexico.l"
+{ yylval.fValue = std::stof(yytext); return LIT_FLOAT;  }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 63 "lexico.l"
-{ return (int)TokenType::LIT_INT;    }
+#line 65 "lexico.l"
+{ yylval.iValue = std::stoi(yytext); return LIT_INT;    }
 	YY_BREAK
 /* STRING */
 case 28:
 /* rule 28 can match eol */
 YY_RULE_SETUP
-#line 66 "lexico.l"
-{ return (int)TokenType::LIT_STRING; }
+#line 68 "lexico.l"
+{ yylval.sValue = strdup(yytext); return LIT_STRING; }
 	YY_BREAK
 /* IDENTIFICADOR — depois das keywords */
 case 29:
 YY_RULE_SETUP
-#line 69 "lexico.l"
-{ return (int)TokenType::IDENTIFICADOR; }
+#line 71 "lexico.l"
+{ yylval.sValue = strdup(yytext); return IDENTIFICADOR; }
 	YY_BREAK
 /* OPERADORES DE 2 CHARS — devem vir antes dos de 1 char */
 case 30:
 YY_RULE_SETUP
-#line 72 "lexico.l"
-{ return (int)TokenType::OP_EQ;  }
+#line 74 "lexico.l"
+{ return OP_EQ;  }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 73 "lexico.l"
-{ return (int)TokenType::OP_NEQ; }
+#line 75 "lexico.l"
+{ return OP_NEQ; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 74 "lexico.l"
-{ return (int)TokenType::OP_LE;  }
+#line 76 "lexico.l"
+{ return OP_LE;  }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 75 "lexico.l"
-{ return (int)TokenType::OP_GE;  }
+#line 77 "lexico.l"
+{ return OP_GE;  }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 76 "lexico.l"
-{ return (int)TokenType::OP_AND; }
+#line 78 "lexico.l"
+{ return OP_AND; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 77 "lexico.l"
-{ return (int)TokenType::OP_OR;  }
+#line 79 "lexico.l"
+{ return OP_OR;  }
 	YY_BREAK
 /* OPERADORES DE 1 CHAR */
 case 36:
 YY_RULE_SETUP
-#line 80 "lexico.l"
-{ return (int)TokenType::OP_ASSIGN;  }
+#line 82 "lexico.l"
+{ return OP_ASSIGN;  }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 81 "lexico.l"
-{ return (int)TokenType::OP_MAIS;    }
+#line 83 "lexico.l"
+{ return OP_MAIS;    }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 82 "lexico.l"
-{ return (int)TokenType::OP_MENOS;   }
+#line 84 "lexico.l"
+{ return OP_MENOS;   }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 83 "lexico.l"
-{ return (int)TokenType::OP_MULTI;   }
+#line 85 "lexico.l"
+{ return OP_MULTI;   }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 84 "lexico.l"
-{ return (int)TokenType::OP_DIVID;   }
+#line 86 "lexico.l"
+{ return OP_DIVID;   }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 85 "lexico.l"
-{ return (int)TokenType::OP_PORCENT; }
+#line 87 "lexico.l"
+{ return OP_PORCENT; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 86 "lexico.l"
-{ return (int)TokenType::OP_LT;      }
+#line 88 "lexico.l"
+{ return OP_LT;      }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 87 "lexico.l"
-{ return (int)TokenType::OP_GT;      }
+#line 89 "lexico.l"
+{ return OP_GT;      }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 88 "lexico.l"
-{ return (int)TokenType::OP_NOT;     }
+#line 90 "lexico.l"
+{ return OP_NOT;     }
 	YY_BREAK
 /* DELIMITADORES */
 case 45:
 YY_RULE_SETUP
-#line 91 "lexico.l"
-{ return (int)TokenType::LPAREN;    }
+#line 93 "lexico.l"
+{ return LPAREN;    }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 92 "lexico.l"
-{ return (int)TokenType::RPAREN;    }
+#line 94 "lexico.l"
+{ return RPAREN;    }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 93 "lexico.l"
-{ return (int)TokenType::LBRACE;    }
+#line 95 "lexico.l"
+{ return LBRACE;    }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 94 "lexico.l"
-{ return (int)TokenType::RBRACE;    }
+#line 96 "lexico.l"
+{ return RBRACE;    }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 95 "lexico.l"
-{ return (int)TokenType::SEMICOLON; }
+#line 97 "lexico.l"
+{ return SEMICOLON; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 96 "lexico.l"
-{ return (int)TokenType::COMMA;     }
+#line 98 "lexico.l"
+{ return COMMA;     }
 	YY_BREAK
 /* COMENTARIOS — ignorados */
 case 51:
 YY_RULE_SETUP
-#line 99 "lexico.l"
+#line 101 "lexico.l"
 { }
 	YY_BREAK
 case 52:
 /* rule 52 can match eol */
 YY_RULE_SETUP
-#line 100 "lexico.l"
+#line 102 "lexico.l"
 { }
 	YY_BREAK
 /* ESPACOS — ignorados */
 case 53:
 /* rule 53 can match eol */
 YY_RULE_SETUP
-#line 103 "lexico.l"
+#line 105 "lexico.l"
 { }
 	YY_BREAK
 /* CARACTERE DESCONHECIDO — sempre por ultimo */
 case 54:
 YY_RULE_SETUP
-#line 106 "lexico.l"
+#line 108 "lexico.l"
 {
         std::cerr << "  ERRO LEXICO [linha " << yylineno
                   << "]: caractere nao reconhecido: '"
                   << yytext << "'\n";
-        return (int)TokenType::UNKNOWN;
+        return UNKNOWN;
     }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 113 "lexico.l"
+#line 115 "lexico.l"
 ECHO;
 	YY_BREAK
-#line 1154 "lex.yy.cc"
+#line 1156 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2123,5 +2125,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 113 "lexico.l"
+#line 115 "lexico.l"
+
 

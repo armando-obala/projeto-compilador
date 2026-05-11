@@ -23,15 +23,17 @@ LEX     = win_flex
 
 all: $(TARGET)
 
-# ── Passo 1: Flex lê lexico.l e gera lex.yy.cc ──────────────────
-# Com %option c++ o Flex gera lex.yy.cc (com dois c) em vez de
-# lex.yy.c — por isso o arquivo de saída tem extensão .cc
-lex.yy.cc: lexico.l
+# ── Passo 1: Bison lê sintatico.y e gera sintatico.tab.c / sintatico.tab.h ──────
+sintatico.tab.c sintatico.tab.h: sintatico.y
+	win_bison -d sintatico.y
+
+# ── Passo 2: Flex lê lexico.l e gera lex.yy.cc ──────────────────
+lex.yy.cc: lexico.l sintatico.tab.h
 	$(LEX) lexico.l
 
-# ── Passo 2: g++ compila lex.yy.cc + main.cpp ───────────────────
-$(TARGET): lex.yy.cc src/main.cpp include/tokens.h
-	$(CXX) $(CXXFLAGS) -o $(TARGET) lex.yy.cc src/main.cpp
+# ── Passo 3: g++ compila tudo ────────────────────────────────────
+$(TARGET): sintatico.tab.c lex.yy.cc src/main.cpp src/ast.cpp src/symtable.cpp
+	$(CXX) $(CXXFLAGS) -o $(TARGET) sintatico.tab.c lex.yy.cc src/main.cpp src/ast.cpp src/symtable.cpp
 
 # ── Modo arquivo ─────────────────────────────────────────────────
 test: $(TARGET)
@@ -43,4 +45,4 @@ interativo: $(TARGET)
 
 # ── Limpeza ──────────────────────────────────────────────────────
 clean:
-	rm -f $(TARGET) lex.yy.cc
+	rm -f $(TARGET) lex.yy.cc sintatico.tab.c sintatico.tab.h

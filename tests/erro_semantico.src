@@ -1,0 +1,10 @@
+// Teste de Erro Semantico
+
+int a = 10;
+string b = "teste";
+
+a = b; // ERRO: Atribuindo string para int
+int a = 20; // ERRO: Redeclaracao
+c = 5; // ERRO: c nao existe
+
+int soma = a + b; // ERRO: soma int com string

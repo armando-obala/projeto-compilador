@@ -1,13 +1,13 @@
 @echo off
 setlocal
 
-win_flex lexico.l
-if errorlevel 1 goto :end
-
-set "GPP=g++"
+set "WIN_BISON=win_bison"
+set "WIN_FLEX=win_flex"
 set "FLEX_INC=C:\winflexbison"
 if not exist "%FLEX_INC%\FlexLexer.h" (
 	set "FLEX_INC=%LOCALAPPDATA%\Microsoft\WinGet\Packages\WinFlexBison.win_flex_bison_Microsoft.Winget.Source_8wekyb3d8bbwe"
+	set "WIN_BISON=%LOCALAPPDATA%\Microsoft\WinGet\Packages\WinFlexBison.win_flex_bison_Microsoft.Winget.Source_8wekyb3d8bbwe\win_bison.exe"
+	set "WIN_FLEX=%LOCALAPPDATA%\Microsoft\WinGet\Packages\WinFlexBison.win_flex_bison_Microsoft.Winget.Source_8wekyb3d8bbwe\win_flex.exe"
 )
 if not exist "%FLEX_INC%\FlexLexer.h" (
 	echo [ERRO] FlexLexer.h nao encontrado.
@@ -15,6 +15,13 @@ if not exist "%FLEX_INC%\FlexLexer.h" (
 	goto :end
 )
 
+"%WIN_BISON%" -d sintatico.y
+if errorlevel 1 goto :end
+
+"%WIN_FLEX%" lexico.l
+if errorlevel 1 goto :end
+
+set "GPP=g++"
 where g++ >nul 2>nul
 if errorlevel 1 (
 	if exist "C:\msys64\ucrt64\bin\g++.exe" (
@@ -26,7 +33,7 @@ if errorlevel 1 (
 	)
 )
 
-"%GPP%" -std=c++17 -Wall -static -static-libgcc -static-libstdc++ -Iinclude -I"%FLEX_INC%" -o compilador lex.yy.cc src/main.cpp
+"%GPP%" -std=c++17 -Wall -static -static-libgcc -static-libstdc++ -Iinclude -I"%FLEX_INC%" -o compilador sintatico.tab.c lex.yy.cc src/main.cpp src/ast.cpp src/symtable.cpp
 if errorlevel 1 goto :end
 
 if exist "C:\msys64\ucrt64\bin\libstdc++-6.dll" copy /Y "C:\msys64\ucrt64\bin\libstdc++-6.dll" ".\" >nul

@@ -1,7 +1,9 @@
 %{
 #include <iostream>
 #include <string>
-#include "tokens.h"
+#include <cstring>
+#include "ast.h"
+#include "sintatico.tab.h"
 %}
 
 %option c++
@@ -29,70 +31,70 @@ PERCENT_PAD {DIGITO}+"%"
 %%
 
  /* PALAVRAS-CHAVE — devem vir antes de IDENTIFICADOR */
-"int"       { return (int)TokenType::KW_INT;    }
-"float"     { return (int)TokenType::KW_FLOAT;  }
-"bool"      { return (int)TokenType::KW_BOOL;   }
-"string"    { return (int)TokenType::KW_STRING; }
-"if"        { return (int)TokenType::KW_IF;     }
-"else"      { return (int)TokenType::KW_ELSE;   }
-"while"     { return (int)TokenType::KW_WHILE;  }
-"enddo"     { return (int)TokenType::KW_ENDDO;  }
-"print"     { return (int)TokenType::KW_PRINT;  }
-"return"    { return (int)TokenType::KW_RETURN; }
-"true"      { return (int)TokenType::LIT_TRUE;  }
-"false"     { return (int)TokenType::LIT_FALSE; }
+"int"       { return KW_INT;    }
+"float"     { return KW_FLOAT;  }
+"bool"      { return KW_BOOL;   }
+"string"    { return KW_STRING; }
+"if"        { return KW_IF;     }
+"else"      { return KW_ELSE;   }
+"while"     { return KW_WHILE;  }
+"enddo"     { return KW_ENDDO;  }
+"print"     { return KW_PRINT;  }
+"return"    { return KW_RETURN; }
+"true"      { return LIT_TRUE;  }
+"false"     { return LIT_FALSE; }
 
  /* TOKENS ESPECIAIS — adicione novos padroes aqui */
-{CPF_PAD}   { return (int)TokenType::LIT_CPF;   }
-{CNPJ_PAD}  { return (int)TokenType::LIT_CNPJ;  }
-{EMAIL_PAD} { return (int)TokenType::LIT_EMAIL;  }
-{DATA_PAD}  { return (int)TokenType::LIT_DATA;   }
-{HORA_PAD}  { return (int)TokenType::LIT_HORA;   }
-{TEL_PAD}   { return (int)TokenType::LIT_TEL;    }
-{CEP_PAD}   { return (int)TokenType::LIT_CEP;    }
-{HEX_PAD}   { return (int)TokenType::LIT_HEX;    }
-{RG_PAD}    { return (int)TokenType::LIT_RG;     }
-{MOEDA_PAD} { return (int)TokenType::LIT_MOEDA;  }
-{URL_PAD}   { return (int)TokenType::LIT_URL;    }
-{IP_PAD}    { return (int)TokenType::LIT_IP;     }
-{PERCENT_PAD} { return (int)TokenType::LIT_PERCENT; }
+{CPF_PAD}   { return LIT_CPF;   }
+{CNPJ_PAD}  { return LIT_CNPJ;  }
+{EMAIL_PAD} { return LIT_EMAIL;  }
+{DATA_PAD}  { return LIT_DATA;   }
+{HORA_PAD}  { return LIT_HORA;   }
+{TEL_PAD}   { return LIT_TEL;    }
+{CEP_PAD}   { return LIT_CEP;    }
+{HEX_PAD}   { return LIT_HEX;    }
+{RG_PAD}    { return LIT_RG;     }
+{MOEDA_PAD} { return LIT_MOEDA;  }
+{URL_PAD}   { return LIT_URL;    }
+{IP_PAD}    { return LIT_IP;     }
+{PERCENT_PAD} { return LIT_PERCENT; }
 
  /* LITERAIS NUMERICOS — float antes de int */
-{DIGITO}+"."{DIGITO}+   { return (int)TokenType::LIT_FLOAT;  }
-{DIGITO}+               { return (int)TokenType::LIT_INT;    }
+{DIGITO}+"."{DIGITO}+   { yylval.fValue = std::stof(yytext); return LIT_FLOAT;  }
+{DIGITO}+               { yylval.iValue = std::stoi(yytext); return LIT_INT;    }
 
  /* STRING */
-\"[^\"]*\"  { return (int)TokenType::LIT_STRING; }
+\"[^\"]*\"  { yylval.sValue = strdup(yytext); return LIT_STRING; }
 
  /* IDENTIFICADOR — depois das keywords */
-{LETRA}{ALFANUM}*   { return (int)TokenType::IDENTIFICADOR; }
+{LETRA}{ALFANUM}*   { yylval.sValue = strdup(yytext); return IDENTIFICADOR; }
 
  /* OPERADORES DE 2 CHARS — devem vir antes dos de 1 char */
-"=="    { return (int)TokenType::OP_EQ;  }
-"!="    { return (int)TokenType::OP_NEQ; }
-"<="    { return (int)TokenType::OP_LE;  }
-">="    { return (int)TokenType::OP_GE;  }
-"&&"    { return (int)TokenType::OP_AND; }
-"||"    { return (int)TokenType::OP_OR;  }
+"=="    { return OP_EQ;  }
+"!="    { return OP_NEQ; }
+"<="    { return OP_LE;  }
+">="    { return OP_GE;  }
+"&&"    { return OP_AND; }
+"||"    { return OP_OR;  }
 
  /* OPERADORES DE 1 CHAR */
-"="     { return (int)TokenType::OP_ASSIGN;  }
-"+"     { return (int)TokenType::OP_MAIS;    }
-"-"     { return (int)TokenType::OP_MENOS;   }
-"*"     { return (int)TokenType::OP_MULTI;   }
-"/"     { return (int)TokenType::OP_DIVID;   }
-"%"     { return (int)TokenType::OP_PORCENT; }
-"<"     { return (int)TokenType::OP_LT;      }
-">"     { return (int)TokenType::OP_GT;      }
-"!"     { return (int)TokenType::OP_NOT;     }
+"="     { return OP_ASSIGN;  }
+"+"     { return OP_MAIS;    }
+"-"     { return OP_MENOS;   }
+"*"     { return OP_MULTI;   }
+"/"     { return OP_DIVID;   }
+"%"     { return OP_PORCENT; }
+"<"     { return OP_LT;      }
+">"     { return OP_GT;      }
+"!"     { return OP_NOT;     }
 
  /* DELIMITADORES */
-"("     { return (int)TokenType::LPAREN;    }
-")"     { return (int)TokenType::RPAREN;    }
-"{"     { return (int)TokenType::LBRACE;    }
-"}"     { return (int)TokenType::RBRACE;    }
-";"     { return (int)TokenType::SEMICOLON; }
-","     { return (int)TokenType::COMMA;     }
+"("     { return LPAREN;    }
+")"     { return RPAREN;    }
+"{"     { return LBRACE;    }
+"}"     { return RBRACE;    }
+";"     { return SEMICOLON; }
+","     { return COMMA;     }
 
  /* COMENTARIOS — ignorados */
 "//".*                      { }
@@ -106,7 +108,7 @@ PERCENT_PAD {DIGITO}+"%"
         std::cerr << "  ERRO LEXICO [linha " << yylineno
                   << "]: caractere nao reconhecido: '"
                   << yytext << "'\n";
-        return (int)TokenType::UNKNOWN;
+        return UNKNOWN;
     }
 
 %%

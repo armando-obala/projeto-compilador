@@ -1,5 +1,5 @@
 ========================================================
-  GUIA DE COMANDOS — Compilador Didático (Flex + C++)
+  GUIA DE COMANDOS — Compilador Didatico (Flex + C++)
 ========================================================
 
 ATENÇÃO: Sempre abra o PowerShell como ADMINISTRADOR
