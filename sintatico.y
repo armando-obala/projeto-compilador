@@ -1,15 +1,19 @@
-%code requires {
-    #include "ast.h"
-}
-
 %{
 #include <iostream>
 #include <string>
+#include "ast.h"
 
 int yylex();
 void yyerror(const char* s);
 extern int get_linha();
+
+extern ProgramNode* rootProgram;
 %}
+
+%code requires {
+    #include "ast.h"
+}
+
 
 %union {
     int iValue;

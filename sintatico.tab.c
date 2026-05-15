@@ -67,16 +67,19 @@
 
 
 /* First part of user prologue.  */
-#line 5 "sintatico.y"
+#line 1 "sintatico.y"
 
 #include <iostream>
 #include <string>
+#include "ast.h"
 
 int yylex();
 void yyerror(const char* s);
 extern int get_linha();
 
-#line 80 "sintatico.tab.c"
+extern ProgramNode* rootProgram;
+
+#line 83 "sintatico.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -566,13 +569,13 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    68,    68,    69,    73,    74,    78,    79,    80,    84,
-      85,    89,    90,    91,    92,    96,    97,    98,    99,   100,
-     104,   105,   109,   113,   117,   121,   125,   125,   126,   130,
-     131,   135,   136,   137,   138,   139,   140,   141,   142,   143,
-     144,   145,   146,   147,   151,   152,   153,   154,   155,   156,
-     157,   158,   159,   160,   161,   162,   163,   164,   165,   166,
-     167,   171,   172,   173,   174,   175
+       0,    72,    72,    73,    77,    78,    82,    83,    84,    88,
+      89,    93,    94,    95,    96,   100,   101,   102,   103,   104,
+     108,   109,   113,   117,   121,   125,   129,   129,   130,   134,
+     135,   139,   140,   141,   142,   143,   144,   145,   146,   147,
+     148,   149,   150,   151,   155,   156,   157,   158,   159,   160,
+     161,   162,   163,   164,   165,   166,   167,   168,   169,   170,
+     171,   175,   176,   177,   178,   179
 };
 #endif
 
@@ -1239,379 +1242,379 @@ yyreduce:
   switch (yyn)
     {
   case 4: /* lista_declaracoes: declaracao  */
-#line 73 "sintatico.y"
+#line 77 "sintatico.y"
                { if ((yyvsp[0].stmt)) rootProgram->addStatement((yyvsp[0].stmt)); }
-#line 1245 "sintatico.tab.c"
+#line 1248 "sintatico.tab.c"
     break;
 
   case 5: /* lista_declaracoes: lista_declaracoes declaracao  */
-#line 74 "sintatico.y"
+#line 78 "sintatico.y"
                                    { if ((yyvsp[0].stmt)) rootProgram->addStatement((yyvsp[0].stmt)); }
-#line 1251 "sintatico.tab.c"
+#line 1254 "sintatico.tab.c"
     break;
 
   case 6: /* declaracao: declaracao_variavel  */
-#line 78 "sintatico.y"
+#line 82 "sintatico.y"
                         { (yyval.stmt) = (yyvsp[0].stmt); }
-#line 1257 "sintatico.tab.c"
+#line 1260 "sintatico.tab.c"
     break;
 
   case 7: /* declaracao: comando  */
-#line 79 "sintatico.y"
+#line 83 "sintatico.y"
               { (yyval.stmt) = (yyvsp[0].stmt); }
-#line 1263 "sintatico.tab.c"
+#line 1266 "sintatico.tab.c"
     break;
 
   case 8: /* declaracao: token_especial_isolado  */
-#line 80 "sintatico.y"
+#line 84 "sintatico.y"
                              { (yyval.stmt) = (yyvsp[0].stmt); }
-#line 1269 "sintatico.tab.c"
+#line 1272 "sintatico.tab.c"
     break;
 
   case 9: /* declaracao_variavel: tipo IDENTIFICADOR OP_ASSIGN expressao SEMICOLON  */
-#line 84 "sintatico.y"
+#line 88 "sintatico.y"
                                                      { (yyval.stmt) = new VarDeclStmt(get_linha(), (yyvsp[-4].dataType), std::string((yyvsp[-3].sValue)), (yyvsp[-1].expr)); free((yyvsp[-3].sValue)); }
-#line 1275 "sintatico.tab.c"
+#line 1278 "sintatico.tab.c"
     break;
 
   case 10: /* declaracao_variavel: tipo IDENTIFICADOR SEMICOLON  */
-#line 85 "sintatico.y"
+#line 89 "sintatico.y"
                                    { (yyval.stmt) = new VarDeclStmt(get_linha(), (yyvsp[-2].dataType), std::string((yyvsp[-1].sValue)), nullptr); free((yyvsp[-1].sValue)); }
-#line 1281 "sintatico.tab.c"
+#line 1284 "sintatico.tab.c"
     break;
 
   case 11: /* tipo: KW_INT  */
-#line 89 "sintatico.y"
+#line 93 "sintatico.y"
            { (yyval.dataType) = DataType::INT; }
-#line 1287 "sintatico.tab.c"
+#line 1290 "sintatico.tab.c"
     break;
 
   case 12: /* tipo: KW_FLOAT  */
-#line 90 "sintatico.y"
+#line 94 "sintatico.y"
                { (yyval.dataType) = DataType::FLOAT; }
-#line 1293 "sintatico.tab.c"
+#line 1296 "sintatico.tab.c"
     break;
 
   case 13: /* tipo: KW_BOOL  */
-#line 91 "sintatico.y"
+#line 95 "sintatico.y"
               { (yyval.dataType) = DataType::BOOL; }
-#line 1299 "sintatico.tab.c"
+#line 1302 "sintatico.tab.c"
     break;
 
   case 14: /* tipo: KW_STRING  */
-#line 92 "sintatico.y"
+#line 96 "sintatico.y"
                 { (yyval.dataType) = DataType::STRING; }
-#line 1305 "sintatico.tab.c"
+#line 1308 "sintatico.tab.c"
     break;
 
   case 15: /* comando: comando_if  */
-#line 96 "sintatico.y"
+#line 100 "sintatico.y"
                { (yyval.stmt) = (yyvsp[0].stmt); }
-#line 1311 "sintatico.tab.c"
+#line 1314 "sintatico.tab.c"
     break;
 
   case 16: /* comando: comando_while  */
-#line 97 "sintatico.y"
+#line 101 "sintatico.y"
                     { (yyval.stmt) = (yyvsp[0].stmt); }
-#line 1317 "sintatico.tab.c"
+#line 1320 "sintatico.tab.c"
     break;
 
   case 17: /* comando: comando_atribuicao  */
-#line 98 "sintatico.y"
+#line 102 "sintatico.y"
                          { (yyval.stmt) = (yyvsp[0].stmt); }
-#line 1323 "sintatico.tab.c"
+#line 1326 "sintatico.tab.c"
     break;
 
   case 18: /* comando: comando_print  */
-#line 99 "sintatico.y"
+#line 103 "sintatico.y"
                     { (yyval.stmt) = (yyvsp[0].stmt); }
-#line 1329 "sintatico.tab.c"
+#line 1332 "sintatico.tab.c"
     break;
 
   case 19: /* comando: comando_return  */
-#line 100 "sintatico.y"
+#line 104 "sintatico.y"
                      { (yyval.stmt) = (yyvsp[0].stmt); }
-#line 1335 "sintatico.tab.c"
+#line 1338 "sintatico.tab.c"
     break;
 
   case 20: /* comando_if: KW_IF LPAREN expressao RPAREN bloco  */
-#line 104 "sintatico.y"
+#line 108 "sintatico.y"
                                         { (yyval.stmt) = new IfStmt(get_linha(), (yyvsp[-2].expr), (yyvsp[0].stmt), nullptr); }
-#line 1341 "sintatico.tab.c"
+#line 1344 "sintatico.tab.c"
     break;
 
   case 21: /* comando_if: KW_IF LPAREN expressao RPAREN bloco KW_ELSE bloco  */
-#line 105 "sintatico.y"
+#line 109 "sintatico.y"
                                                         { (yyval.stmt) = new IfStmt(get_linha(), (yyvsp[-4].expr), (yyvsp[-2].stmt), (yyvsp[0].stmt)); }
-#line 1347 "sintatico.tab.c"
+#line 1350 "sintatico.tab.c"
     break;
 
   case 22: /* comando_while: KW_WHILE LPAREN expressao RPAREN bloco  */
-#line 109 "sintatico.y"
+#line 113 "sintatico.y"
                                            { (yyval.stmt) = new WhileStmt(get_linha(), (yyvsp[-2].expr), (yyvsp[0].stmt)); }
-#line 1353 "sintatico.tab.c"
+#line 1356 "sintatico.tab.c"
     break;
 
   case 23: /* comando_atribuicao: IDENTIFICADOR OP_ASSIGN expressao SEMICOLON  */
-#line 113 "sintatico.y"
+#line 117 "sintatico.y"
                                                 { (yyval.stmt) = new AssignStmt(get_linha(), std::string((yyvsp[-3].sValue)), (yyvsp[-1].expr)); free((yyvsp[-3].sValue)); }
-#line 1359 "sintatico.tab.c"
+#line 1362 "sintatico.tab.c"
     break;
 
   case 24: /* comando_print: KW_PRINT LPAREN expressao RPAREN SEMICOLON  */
-#line 117 "sintatico.y"
+#line 121 "sintatico.y"
                                                { (yyval.stmt) = new PrintStmt(get_linha(), (yyvsp[-2].expr)); }
-#line 1365 "sintatico.tab.c"
+#line 1368 "sintatico.tab.c"
     break;
 
   case 25: /* comando_return: KW_RETURN expressao SEMICOLON  */
-#line 121 "sintatico.y"
+#line 125 "sintatico.y"
                                   { (yyval.stmt) = new ReturnStmt(get_linha(), (yyvsp[-1].expr)); }
-#line 1371 "sintatico.tab.c"
+#line 1374 "sintatico.tab.c"
     break;
 
   case 26: /* @1: %empty  */
-#line 125 "sintatico.y"
+#line 129 "sintatico.y"
            { (yyval.stmt) = new BlockStmt(get_linha()); }
-#line 1377 "sintatico.tab.c"
+#line 1380 "sintatico.tab.c"
     break;
 
   case 27: /* bloco: LBRACE @1 lista_declaracoes_bloco RBRACE  */
-#line 125 "sintatico.y"
+#line 129 "sintatico.y"
                                                                                      { (yyval.stmt) = (yyvsp[-2].stmt); }
-#line 1383 "sintatico.tab.c"
+#line 1386 "sintatico.tab.c"
     break;
 
   case 28: /* bloco: LBRACE RBRACE  */
-#line 126 "sintatico.y"
+#line 130 "sintatico.y"
                     { (yyval.stmt) = new BlockStmt(get_linha()); }
-#line 1389 "sintatico.tab.c"
+#line 1392 "sintatico.tab.c"
     break;
 
   case 29: /* lista_declaracoes_bloco: declaracao  */
-#line 130 "sintatico.y"
+#line 134 "sintatico.y"
                { if ((yyvsp[0].stmt)) ((BlockStmt*)(yyvsp[-1].stmt))->addStatement((yyvsp[0].stmt)); }
-#line 1395 "sintatico.tab.c"
+#line 1398 "sintatico.tab.c"
     break;
 
   case 30: /* lista_declaracoes_bloco: lista_declaracoes_bloco declaracao  */
-#line 131 "sintatico.y"
+#line 135 "sintatico.y"
                                          { if ((yyvsp[0].stmt)) ((BlockStmt*)(yyvsp[-2].stmt))->addStatement((yyvsp[0].stmt)); }
-#line 1401 "sintatico.tab.c"
+#line 1404 "sintatico.tab.c"
     break;
 
   case 31: /* token_especial_isolado: LIT_CPF  */
-#line 135 "sintatico.y"
+#line 139 "sintatico.y"
             { (yyval.stmt) = nullptr; }
-#line 1407 "sintatico.tab.c"
+#line 1410 "sintatico.tab.c"
     break;
 
   case 32: /* token_especial_isolado: LIT_CNPJ  */
-#line 136 "sintatico.y"
+#line 140 "sintatico.y"
                { (yyval.stmt) = nullptr; }
-#line 1413 "sintatico.tab.c"
+#line 1416 "sintatico.tab.c"
     break;
 
   case 33: /* token_especial_isolado: LIT_EMAIL  */
-#line 137 "sintatico.y"
+#line 141 "sintatico.y"
                 { (yyval.stmt) = nullptr; }
-#line 1419 "sintatico.tab.c"
+#line 1422 "sintatico.tab.c"
     break;
 
   case 34: /* token_especial_isolado: LIT_DATA  */
-#line 138 "sintatico.y"
+#line 142 "sintatico.y"
                { (yyval.stmt) = nullptr; }
-#line 1425 "sintatico.tab.c"
+#line 1428 "sintatico.tab.c"
     break;
 
   case 35: /* token_especial_isolado: LIT_HORA  */
-#line 139 "sintatico.y"
+#line 143 "sintatico.y"
                { (yyval.stmt) = nullptr; }
-#line 1431 "sintatico.tab.c"
+#line 1434 "sintatico.tab.c"
     break;
 
   case 36: /* token_especial_isolado: LIT_TEL  */
-#line 140 "sintatico.y"
+#line 144 "sintatico.y"
               { (yyval.stmt) = nullptr; }
-#line 1437 "sintatico.tab.c"
+#line 1440 "sintatico.tab.c"
     break;
 
   case 37: /* token_especial_isolado: LIT_CEP  */
-#line 141 "sintatico.y"
+#line 145 "sintatico.y"
               { (yyval.stmt) = nullptr; }
-#line 1443 "sintatico.tab.c"
+#line 1446 "sintatico.tab.c"
     break;
 
   case 38: /* token_especial_isolado: LIT_HEX  */
-#line 142 "sintatico.y"
+#line 146 "sintatico.y"
               { (yyval.stmt) = nullptr; }
-#line 1449 "sintatico.tab.c"
+#line 1452 "sintatico.tab.c"
     break;
 
   case 39: /* token_especial_isolado: LIT_RG  */
-#line 143 "sintatico.y"
+#line 147 "sintatico.y"
              { (yyval.stmt) = nullptr; }
-#line 1455 "sintatico.tab.c"
+#line 1458 "sintatico.tab.c"
     break;
 
   case 40: /* token_especial_isolado: LIT_MOEDA  */
-#line 144 "sintatico.y"
+#line 148 "sintatico.y"
                 { (yyval.stmt) = nullptr; }
-#line 1461 "sintatico.tab.c"
+#line 1464 "sintatico.tab.c"
     break;
 
   case 41: /* token_especial_isolado: LIT_URL  */
-#line 145 "sintatico.y"
+#line 149 "sintatico.y"
               { (yyval.stmt) = nullptr; }
-#line 1467 "sintatico.tab.c"
+#line 1470 "sintatico.tab.c"
     break;
 
   case 42: /* token_especial_isolado: LIT_IP  */
-#line 146 "sintatico.y"
+#line 150 "sintatico.y"
              { (yyval.stmt) = nullptr; }
-#line 1473 "sintatico.tab.c"
+#line 1476 "sintatico.tab.c"
     break;
 
   case 43: /* token_especial_isolado: LIT_PERCENT  */
-#line 147 "sintatico.y"
+#line 151 "sintatico.y"
                   { (yyval.stmt) = nullptr; }
-#line 1479 "sintatico.tab.c"
+#line 1482 "sintatico.tab.c"
     break;
 
   case 44: /* expressao: expressao OP_MAIS expressao  */
-#line 151 "sintatico.y"
+#line 155 "sintatico.y"
                                 { (yyval.expr) = new BinaryExpr(get_linha(), (yyvsp[-2].expr), Operator::ADD, (yyvsp[0].expr)); }
-#line 1485 "sintatico.tab.c"
+#line 1488 "sintatico.tab.c"
     break;
 
   case 45: /* expressao: expressao OP_MENOS expressao  */
-#line 152 "sintatico.y"
+#line 156 "sintatico.y"
                                    { (yyval.expr) = new BinaryExpr(get_linha(), (yyvsp[-2].expr), Operator::SUB, (yyvsp[0].expr)); }
-#line 1491 "sintatico.tab.c"
+#line 1494 "sintatico.tab.c"
     break;
 
   case 46: /* expressao: expressao OP_MULTI expressao  */
-#line 153 "sintatico.y"
+#line 157 "sintatico.y"
                                    { (yyval.expr) = new BinaryExpr(get_linha(), (yyvsp[-2].expr), Operator::MUL, (yyvsp[0].expr)); }
-#line 1497 "sintatico.tab.c"
+#line 1500 "sintatico.tab.c"
     break;
 
   case 47: /* expressao: expressao OP_DIVID expressao  */
-#line 154 "sintatico.y"
+#line 158 "sintatico.y"
                                    { (yyval.expr) = new BinaryExpr(get_linha(), (yyvsp[-2].expr), Operator::DIV, (yyvsp[0].expr)); }
-#line 1503 "sintatico.tab.c"
+#line 1506 "sintatico.tab.c"
     break;
 
   case 48: /* expressao: expressao OP_PORCENT expressao  */
-#line 155 "sintatico.y"
+#line 159 "sintatico.y"
                                      { (yyval.expr) = new BinaryExpr(get_linha(), (yyvsp[-2].expr), Operator::MOD, (yyvsp[0].expr)); }
-#line 1509 "sintatico.tab.c"
+#line 1512 "sintatico.tab.c"
     break;
 
   case 49: /* expressao: expressao OP_EQ expressao  */
-#line 156 "sintatico.y"
+#line 160 "sintatico.y"
                                 { (yyval.expr) = new BinaryExpr(get_linha(), (yyvsp[-2].expr), Operator::EQ, (yyvsp[0].expr)); }
-#line 1515 "sintatico.tab.c"
+#line 1518 "sintatico.tab.c"
     break;
 
   case 50: /* expressao: expressao OP_NEQ expressao  */
-#line 157 "sintatico.y"
+#line 161 "sintatico.y"
                                  { (yyval.expr) = new BinaryExpr(get_linha(), (yyvsp[-2].expr), Operator::NEQ, (yyvsp[0].expr)); }
-#line 1521 "sintatico.tab.c"
+#line 1524 "sintatico.tab.c"
     break;
 
   case 51: /* expressao: expressao OP_LT expressao  */
-#line 158 "sintatico.y"
+#line 162 "sintatico.y"
                                 { (yyval.expr) = new BinaryExpr(get_linha(), (yyvsp[-2].expr), Operator::LT, (yyvsp[0].expr)); }
-#line 1527 "sintatico.tab.c"
+#line 1530 "sintatico.tab.c"
     break;
 
   case 52: /* expressao: expressao OP_GT expressao  */
-#line 159 "sintatico.y"
+#line 163 "sintatico.y"
                                 { (yyval.expr) = new BinaryExpr(get_linha(), (yyvsp[-2].expr), Operator::GT, (yyvsp[0].expr)); }
-#line 1533 "sintatico.tab.c"
+#line 1536 "sintatico.tab.c"
     break;
 
   case 53: /* expressao: expressao OP_LE expressao  */
-#line 160 "sintatico.y"
+#line 164 "sintatico.y"
                                 { (yyval.expr) = new BinaryExpr(get_linha(), (yyvsp[-2].expr), Operator::LE, (yyvsp[0].expr)); }
-#line 1539 "sintatico.tab.c"
+#line 1542 "sintatico.tab.c"
     break;
 
   case 54: /* expressao: expressao OP_GE expressao  */
-#line 161 "sintatico.y"
+#line 165 "sintatico.y"
                                 { (yyval.expr) = new BinaryExpr(get_linha(), (yyvsp[-2].expr), Operator::GE, (yyvsp[0].expr)); }
-#line 1545 "sintatico.tab.c"
+#line 1548 "sintatico.tab.c"
     break;
 
   case 55: /* expressao: expressao OP_AND expressao  */
-#line 162 "sintatico.y"
+#line 166 "sintatico.y"
                                  { (yyval.expr) = new BinaryExpr(get_linha(), (yyvsp[-2].expr), Operator::AND, (yyvsp[0].expr)); }
-#line 1551 "sintatico.tab.c"
+#line 1554 "sintatico.tab.c"
     break;
 
   case 56: /* expressao: expressao OP_OR expressao  */
-#line 163 "sintatico.y"
+#line 167 "sintatico.y"
                                 { (yyval.expr) = new BinaryExpr(get_linha(), (yyvsp[-2].expr), Operator::OR, (yyvsp[0].expr)); }
-#line 1557 "sintatico.tab.c"
+#line 1560 "sintatico.tab.c"
     break;
 
   case 57: /* expressao: OP_NOT expressao  */
-#line 164 "sintatico.y"
+#line 168 "sintatico.y"
                        { (yyval.expr) = new UnaryExpr(get_linha(), Operator::NOT, (yyvsp[0].expr)); }
-#line 1563 "sintatico.tab.c"
+#line 1566 "sintatico.tab.c"
     break;
 
   case 58: /* expressao: LPAREN expressao RPAREN  */
-#line 165 "sintatico.y"
+#line 169 "sintatico.y"
                               { (yyval.expr) = (yyvsp[-1].expr); }
-#line 1569 "sintatico.tab.c"
+#line 1572 "sintatico.tab.c"
     break;
 
   case 59: /* expressao: IDENTIFICADOR  */
-#line 166 "sintatico.y"
+#line 170 "sintatico.y"
                     { (yyval.expr) = new IdentifierExpr(get_linha(), std::string((yyvsp[0].sValue))); free((yyvsp[0].sValue)); }
-#line 1575 "sintatico.tab.c"
+#line 1578 "sintatico.tab.c"
     break;
 
   case 60: /* expressao: literal  */
-#line 167 "sintatico.y"
+#line 171 "sintatico.y"
               { (yyval.expr) = (yyvsp[0].expr); }
-#line 1581 "sintatico.tab.c"
+#line 1584 "sintatico.tab.c"
     break;
 
   case 61: /* literal: LIT_INT  */
-#line 171 "sintatico.y"
+#line 175 "sintatico.y"
             { (yyval.expr) = new LiteralIntExpr(get_linha(), (yyvsp[0].iValue)); }
-#line 1587 "sintatico.tab.c"
+#line 1590 "sintatico.tab.c"
     break;
 
   case 62: /* literal: LIT_FLOAT  */
-#line 172 "sintatico.y"
+#line 176 "sintatico.y"
                 { (yyval.expr) = new LiteralFloatExpr(get_linha(), (yyvsp[0].fValue)); }
-#line 1593 "sintatico.tab.c"
+#line 1596 "sintatico.tab.c"
     break;
 
   case 63: /* literal: LIT_STRING  */
-#line 173 "sintatico.y"
+#line 177 "sintatico.y"
                  { (yyval.expr) = new LiteralStringExpr(get_linha(), std::string((yyvsp[0].sValue))); free((yyvsp[0].sValue)); }
-#line 1599 "sintatico.tab.c"
+#line 1602 "sintatico.tab.c"
     break;
 
   case 64: /* literal: LIT_TRUE  */
-#line 174 "sintatico.y"
+#line 178 "sintatico.y"
                { (yyval.expr) = new LiteralBoolExpr(get_linha(), true); }
-#line 1605 "sintatico.tab.c"
+#line 1608 "sintatico.tab.c"
     break;
 
   case 65: /* literal: LIT_FALSE  */
-#line 175 "sintatico.y"
+#line 179 "sintatico.y"
                 { (yyval.expr) = new LiteralBoolExpr(get_linha(), false); }
-#line 1611 "sintatico.tab.c"
+#line 1614 "sintatico.tab.c"
     break;
 
 
-#line 1615 "sintatico.tab.c"
+#line 1618 "sintatico.tab.c"
 
       default: break;
     }
@@ -1804,7 +1807,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 178 "sintatico.y"
+#line 182 "sintatico.y"
 
 
 void yyerror(const char* s) {

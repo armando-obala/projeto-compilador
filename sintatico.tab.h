@@ -45,7 +45,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 1 "sintatico.y"
+#line 13 "sintatico.y"
 
     #include "ast.h"
 
@@ -119,7 +119,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 14 "sintatico.y"
+#line 18 "sintatico.y"
 
     int iValue;
     float fValue;

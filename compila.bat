@@ -4,16 +4,7 @@ setlocal
 set "WIN_BISON=win_bison"
 set "WIN_FLEX=win_flex"
 set "FLEX_INC=C:\winflexbison"
-if not exist "%FLEX_INC%\FlexLexer.h" (
-	set "FLEX_INC=%LOCALAPPDATA%\Microsoft\WinGet\Packages\WinFlexBison.win_flex_bison_Microsoft.Winget.Source_8wekyb3d8bbwe"
-	set "WIN_BISON=%LOCALAPPDATA%\Microsoft\WinGet\Packages\WinFlexBison.win_flex_bison_Microsoft.Winget.Source_8wekyb3d8bbwe\win_bison.exe"
-	set "WIN_FLEX=%LOCALAPPDATA%\Microsoft\WinGet\Packages\WinFlexBison.win_flex_bison_Microsoft.Winget.Source_8wekyb3d8bbwe\win_flex.exe"
-)
-if not exist "%FLEX_INC%\FlexLexer.h" (
-	echo [ERRO] FlexLexer.h nao encontrado.
-	echo [DICA] Reinstale winflexbison ou ajuste FLEX_INC no compila.bat.
-	goto :end
-)
+set "GPP=C:\msys64\ucrt64\bin\g++.exe"
 
 "%WIN_BISON%" -d sintatico.y
 if errorlevel 1 goto :end
@@ -21,24 +12,25 @@ if errorlevel 1 goto :end
 "%WIN_FLEX%" lexico.l
 if errorlevel 1 goto :end
 
-set "GPP=g++"
-where g++ >nul 2>nul
-if errorlevel 1 (
-	if exist "C:\msys64\ucrt64\bin\g++.exe" (
-		set "GPP=C:\msys64\ucrt64\bin\g++.exe"
-	) else (
-		echo [ERRO] g++ nao encontrado no PATH.
-		echo [DICA] Instale MSYS2 UCRT64 e/ou adicione C:\msys64\ucrt64\bin no PATH.
-		goto :end
-	)
-)
-
-"%GPP%" -std=c++17 -Wall -static -static-libgcc -static-libstdc++ -Iinclude -I"%FLEX_INC%" -o compilador sintatico.tab.c lex.yy.cc src/main.cpp src/ast.cpp src/symtable.cpp
+"%GPP%" -std=c++17 -Wall -Iinclude -I"%FLEX_INC%" -c src\main.cpp -o main.o
 if errorlevel 1 goto :end
 
-if exist "C:\msys64\ucrt64\bin\libstdc++-6.dll" copy /Y "C:\msys64\ucrt64\bin\libstdc++-6.dll" ".\" >nul
-if exist "C:\msys64\ucrt64\bin\libgcc_s_seh-1.dll" copy /Y "C:\msys64\ucrt64\bin\libgcc_s_seh-1.dll" ".\" >nul
-if exist "C:\msys64\ucrt64\bin\libwinpthread-1.dll" copy /Y "C:\msys64\ucrt64\bin\libwinpthread-1.dll" ".\" >nul
+"%GPP%" -std=c++17 -Wall -Iinclude -I"%FLEX_INC%" -c src\ast.cpp -o ast.o
+if errorlevel 1 goto :end
+
+"%GPP%" -std=c++17 -Wall -Iinclude -I"%FLEX_INC%" -c src\symtable.cpp -o symtable.o
+if errorlevel 1 goto :end
+
+"%GPP%" -x c++ -std=c++17 -Wall -Iinclude -I"%FLEX_INC%" -c sintatico.tab.c -o sintatico.tab.o
+if errorlevel 1 goto :end
+
+"%GPP%" -std=c++17 -Wall -Iinclude -I"%FLEX_INC%" -c lex.yy.cc -o lex.yy.o
+if errorlevel 1 goto :end
+
+"%GPP%" -o compilador.exe main.o ast.o symtable.o sintatico.tab.o lex.yy.o -Wl,-subsystem,console
+if errorlevel 1 goto :end
+
+echo [OK] Compilado com sucesso.
 
 :end
 endlocal
